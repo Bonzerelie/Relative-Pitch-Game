@@ -60,3 +60,7 @@ button:hover {
 #reference {
   margin-top: 20px;
 }
+
+#replayBtn, #nextBtn, #resetScoreBtn, #referenceBtn {
+  margin-top: 15px;
+}
