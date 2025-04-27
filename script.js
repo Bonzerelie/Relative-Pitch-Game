@@ -65,4 +65,57 @@ function startGame() {
 }
 
 // Handle guess
-func
+function makeGuess(selectedName) {
+  if (answered) return; // Prevent double answering
+
+  if (selectedName === currentNote.name) {
+    resultDiv.textContent = "✅ Correct!\n";
+    correctCount++;
+  } else {
+    resultDiv.textContent = `❌ Wrong! It was ${currentNote.name}\n`;
+    incorrectCount++;
+  }
+
+  answered = true;
+  updateScore();
+}
+
+// Replay current note
+function replayNote() {
+  if (currentNote) {
+    playNote(currentNote.file);
+  }
+}
+
+// Play reference note C4
+function playReferenceNote() {
+  playNote("C4.mp3");
+}
+
+// Update the score
+function updateScore() {
+  correctCountSpan.textContent = correctCount;
+  incorrectCountSpan.textContent = incorrectCount;
+  const total = correctCount + incorrectCount;
+  totalCountSpan.textContent = total;
+  const percentage = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+  percentageSpan.textContent = `${percentage}%`;
+}
+
+// Reset the game
+function resetScore() {
+  correctCount = 0;
+  incorrectCount = 0;
+  currentNote = null;
+  answered = false;
+  updateScore();
+  resultDiv.textContent = "";
+  startBtn.textContent = "Start";
+  buttonsDiv.classList.add('hidden');
+}
+
+// Event listeners
+startBtn.addEventListener('click', startGame);
+replayBtn.addEventListener('click', replayNote);
+referenceBtn.addEventListener('click', playReferenceNote);
+resetScoreBtn.addEventListener('click', resetScore);
