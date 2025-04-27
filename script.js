@@ -53,13 +53,14 @@ function startGame() {
   playNote(currentNote.file);
 
   // Generate choice buttons
-  choicesDiv.innerHTML = "";
-  notes.forEach(note => {
-    const btn = document.createElement('button');
-    btn.textContent = note.name;
-    btn.addEventListener('click', () => makeGuess(note.name));
-    choicesDiv.appendChild(btn);
-  });
+choicesDiv.innerHTML = "";
+notes.forEach(note => {
+  const btn = document.createElement('button');
+  // Only display the note letter (without number)
+  btn.textContent = note.name.split(/[0-9]/)[0];  // This will remove the number
+  btn.addEventListener('click', () => makeGuess(note.name));
+  choicesDiv.appendChild(btn);
+});
 
   startBtn.textContent = "Next";
 }
