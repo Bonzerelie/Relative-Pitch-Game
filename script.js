@@ -1,21 +1,4 @@
-// Define the audio files for each note
-const audioFiles = {
-  "C": "audio/C4.mp3",
-  "C#/Db": "audio/Csharp4.mp3",
-  "D": "audio/D4.mp3",
-  "D#/Eb": "audio/Dsharp4.mp3",
-  "E": "audio/E4.mp3",
-  "F": "audio/F4.mp3",
-  "F#/Gb": "audio/Fsharp4.mp3",
-  "G": "audio/G4.mp3",
-  "G#/Ab": "audio/Gsharp4.mp3",
-  "A": "audio/A4.mp3",
-  "A#/Bb": "audio/Asharp4.mp3",
-  "B": "audio/B4.mp3",
-  "C5": "audio/C5.mp3"
-};
-
-// Define the chromatic scale notes
+// Define C Chromatic scale frequencies with both sharp and flat representations
 const notes = [
   { name: "C", freq: 261.63 },
   { name: "C#/Db", freq: 277.18 },
@@ -50,27 +33,39 @@ const incorrectCountSpan = document.getElementById('incorrectCount');
 const totalCountSpan = document.getElementById('totalCount');
 const percentageSpan = document.getElementById('percentage');
 
-// Function to play a note from the audio files
-function playNote(noteName) {
-  const audio = new Audio(audioFiles[noteName]);
-  audio.play();
+// Function to play a sound
+function playNote(freq) {
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = context.createOscillator();
+  const gainNode = context.createGain();
+  
+  oscillator.type = 'sine';
+  oscillator.frequency.value = freq;
+  oscillator.connect(gainNode);
+  gainNode.connect(context.destination);
+  
+  oscillator.start();
+  gainNode.gain.setValueAtTime(1, context.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 1);
+  oscillator.stop(context.currentTime + 1);
 }
 
-// Function to play C4 note as reference
+// Function to play C4 note
 function playC4() {
-  playNote('C'); // Plays the C4 note from the audio
+  playNote(notes[0].freq); // C4 is the first note in the array
 }
 
 // Function to start or proceed to the next note
 function startOrNext() {
+  // If the game hasn't started yet (i.e., it's the first time clicking the button)
   if (startBtn.textContent === 'Start') {
     resultDiv.textContent = "";
     
     // Randomly pick a note from the chromatic scale
     currentNote = notes[Math.floor(Math.random() * notes.length)];
     
-    // Play the selected note from the audio
-    playNote(currentNote.name);
+    // Play the selected note immediately
+    playNote(currentNote.freq);
     
     // Display the answer buttons with sharp/flat notation
     answerButtons.forEach((button, index) => {
@@ -81,24 +76,27 @@ function startOrNext() {
     questionAnswered = false;
     startBtn.textContent = 'Next'; // Change "Start" to "Next"
   } else {
+    // If the game has already started, and the player answers the current question
     if (!questionAnswered) {
       alert("Please answer the question before moving to the next note!");
       return;
     }
 
+    // Proceed to the next note
     resultDiv.textContent = "";
     
     // Randomly pick a note from the chromatic scale
     currentNote = notes[Math.floor(Math.random() * notes.length)];
     
-    // Play the selected note from the audio
-    playNote(currentNote.name);
+    // Play the selected note immediately
+    playNote(currentNote.freq);
 
     // Display the answer buttons again
     answerButtons.forEach((button, index) => {
       button.textContent = notes[index].name;  // Set button labels to note names (including flats)
     });
 
+    // Show the answer buttons again
     buttonsDiv.classList.remove('hidden');
     questionAnswered = false;
     startBtn.textContent = 'Next'; // Keep the text as "Next" after the first question
@@ -151,7 +149,7 @@ function resetScore() {
 
 // Function to handle the replay functionality
 function replayNote() {
-  playNote(currentNote.name);  // Replay the current note when clicked
+  playNote(currentNote.freq);  // Replay the current note when clicked
 }
 
 // Event listeners
