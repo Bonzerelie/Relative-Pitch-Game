@@ -2,20 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Piano Note Guessing Game</title>
+  <title>C Chromatic Scale - Guess the Note Game</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="game-container">
-    <h1>Guess the Piano Note! 🎹</h1>
-
+    <h1>Guess the Note! 🎶</h1>
+    
     <button id="startBtn">Start</button>
-
+    <button id="referenceBtn">Play C (Reference)</button>
+    
     <div id="buttons" class="hidden">
-      <p id="prompt">Which note was played?</p>
-      <div id="choices"></div>
+      <p id="prompt">Which note is this?</p>
+
+      <button class="answerBtn">C</button>
+      <button class="answerBtn">C#/Db</button>
+      <button class="answerBtn">D</button>
+      <button class="answerBtn">D#/Eb</button>
+      <button class="answerBtn">E</button>
+      <button class="answerBtn">F</button>
+      <button class="answerBtn">F#/Gb</button>
+      <button class="answerBtn">G</button>
+      <button class="answerBtn">G#/Ab</button>
+      <button class="answerBtn">A</button>
+      <button class="answerBtn">A#/Bb</button>
+      <button class="answerBtn">B</button>
+      <button class="answerBtn">C</button>
+      
+      <br>
+
       <button id="replayBtn">Replay Note</button>
-      <button id="nextBtn" class="hidden">Next</button>
     </div>
 
     <div id="result"></div>
@@ -25,11 +41,7 @@
       <p>Incorrect: <span id="incorrectCount">0</span></p>
       <p>Total Questions: <span id="totalCount">0</span></p>
       <p>Percentage: <span id="percentage">0%</span></p>
-      <button id="resetScoreBtn">Reset</button>
-    </div>
-
-    <div id="reference">
-      <button id="referenceBtn">Play Reference C4</button>
+      <button id="resetScoreBtn">Reset Score</button>
     </div>
   </div>
 
