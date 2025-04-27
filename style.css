@@ -37,24 +37,34 @@ button:hover {
   display: none;
 }
 
+#choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+#choices button {
+  margin: 5px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #2196F3;
+}
+
+#choices button:hover {
+  background-color: #1e88e5;
+}
+
 #result {
   margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
-  white-space: pre-line; /* This makes \n behave like real line breaks! */
+  white-space: pre-line;
 }
 
 #score {
   margin-top: 20px;
   font-size: 18px;
-}
-
-#nextBtn {
-  display: none;
-}
-
-#buttons {
-  margin-top: 20px;
 }
 
 #reference {
