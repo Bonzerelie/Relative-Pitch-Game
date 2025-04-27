@@ -48,3 +48,15 @@ button:hover {
   margin-top: 20px;
   font-size: 18px;
 }
+
+#nextBtn {
+  display: none;
+}
+
+#buttons {
+  margin-top: 20px;
+}
+
+#reference {
+  margin-top: 20px;
+}
