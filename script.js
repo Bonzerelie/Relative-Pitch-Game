@@ -5,7 +5,7 @@ let correctCount = 0;
 let incorrectCount = 0;
 
 const startBtn = document.getElementById('startBtn');
-const nextBtn = document.getElementById('nextBtn');
+const nextBtn = document.getElementById('nextBtn'); // New Next Button
 const replayBtn = document.getElementById('replayBtn');
 const resetScoreBtn = document.getElementById('resetScoreBtn');
 const referenceBtn = document.getElementById('referenceBtn');
@@ -17,14 +17,41 @@ const incorrectCountSpan = document.getElementById('incorrectCount');
 const totalCountSpan = document.getElementById('totalCount');
 const percentageSpan = document.getElementById('percentage');
 
+// List of notes with their corresponding file names
+const notes = [
+  { name: 'C', file: 'C4.mp3' },
+  { name: 'C#/Db', file: 'Csharp4.mp3' },
+  { name: 'D', file: 'D4.mp3' },
+  { name: 'D#/Eb', file: 'Dsharp4.mp3' },
+  { name: 'E', file: 'E4.mp3' },
+  { name: 'F', file: 'F4.mp3' },
+  { name: 'F#/Gb', file: 'Fsharp4.mp3' },
+  { name: 'G', file: 'G4.mp3' },
+  { name: 'G#/Ab', file: 'Gsharp4.mp3' },
+  { name: 'A', file: 'A4.mp3' },
+  { name: 'A#/Bb', file: 'Asharp4.mp3' },
+  { name: 'B', file: 'B4.mp3' }
+];
+
+// Function to play a note
+function playNote(file) {
+  const audio = new Audio('audio/' + file); // Assuming your audio folder is called 'audio'
+  audio.play();
+}
+
 // Start or move to next question
 function startGame() {
+  // Prevent moving to next question before answering
   if (currentNote && !answered) {
     alert("Please select an answer before moving on!");
     return;
   }
 
-  buttonsDiv.classList.remove('hidden');
+  // Hide the original 'Start' button and show the new 'Next' button
+  startBtn.classList.add('hidden');
+  nextBtn.classList.remove('hidden');
+
+  // Reset result display
   resultDiv.textContent = "";
   answered = false;
 
@@ -41,8 +68,6 @@ function startGame() {
     btn.addEventListener('click', () => makeGuess(note.name));
     choicesDiv.appendChild(btn);
   });
-
-  startBtn.textContent = "Next";
 }
 
 // Handle user's guess
@@ -92,12 +117,14 @@ function resetScore() {
   updateScore();
   resultDiv.textContent = "";
   startBtn.textContent = "Start";
+  startBtn.classList.remove('hidden');
+  nextBtn.classList.add('hidden');
   buttonsDiv.classList.add('hidden');
 }
 
 // Event listeners
 startBtn.addEventListener('click', startGame);
-nextBtn.addEventListener('click', startGame);
+nextBtn.addEventListener('click', startGame); // Ensure next works
 replayBtn.addEventListener('click', replayNote);
 referenceBtn.addEventListener('click', playReferenceNote);
 resetScoreBtn.addEventListener('click', resetScore);
