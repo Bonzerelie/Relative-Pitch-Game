@@ -1,4 +1,4 @@
-// Initialize
+// Initialize variables
 let currentNote = null;
 let answered = false;
 let correctCount = 0;
