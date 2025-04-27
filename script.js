@@ -1,4 +1,4 @@
-// Initialize
+// Initialize variables
 let currentNote = null;
 let answered = false;
 let correctCount = 0;
@@ -47,9 +47,10 @@ function startGame() {
     return;
   }
 
-  // Hide the original 'Start' button and show the new 'Next' button
+  // Show answer buttons and 'Next' button
   startBtn.classList.add('hidden');
   nextBtn.classList.remove('hidden');
+  buttonsDiv.classList.remove('hidden'); // Make sure the buttons appear after starting
 
   // Reset result display
   resultDiv.textContent = "";
