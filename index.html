@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Piano Note Guessing Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Guess the Piano Note! 🎹</h1>
+
+    <button id="startBtn">Start</button>
+
+    <div id="buttons" class="hidden">
+      <p id="prompt">Which note was played?</p>
+      <div id="choices"></div>
+      <button id="replayBtn">Replay Note</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="score">
+      <p>Correct: <span id="correctCount">0</span></p>
+      <p>Incorrect: <span id="incorrectCount">0</span></p>
+      <p>Total Questions: <span id="totalCount">0</span></p>
+      <p>Percentage: <span id="percentage">0%</span></p>
+      <button id="resetScoreBtn">Reset</button>
+    </div>
+
+    <div id="reference">
+      <button id="referenceBtn">Play Reference C4</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
