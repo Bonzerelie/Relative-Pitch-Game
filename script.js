@@ -31,15 +31,15 @@ const incorrectCountSpan = document.getElementById('incorrectCount');
 const totalCountSpan = document.getElementById('totalCount');
 const percentageSpan = document.getElementById('percentage');
 
-// Helper function to play a note
+// Play a note from file
 function playNote(fileName) {
   const audio = new Audio(`audio/${fileName}`);
   audio.play();
 }
 
-// Start or Next Question
+// Start or move to next question
 function startGame() {
-  if (!answered && currentNote) {
+  if (currentNote && !answered) {
     alert("Please select an answer before moving on!");
     return;
   }
@@ -64,9 +64,9 @@ function startGame() {
   startBtn.textContent = "Next";
 }
 
-// Handle guess
+// Handle user's guess
 function makeGuess(selectedName) {
-  if (answered) return; // Prevent double answering
+  if (answered) return;
 
   if (selectedName === currentNote.name) {
     resultDiv.textContent = "✅ Correct!\n";
@@ -80,7 +80,7 @@ function makeGuess(selectedName) {
   updateScore();
 }
 
-// Replay current note
+// Replay the current note
 function replayNote() {
   if (currentNote) {
     playNote(currentNote.file);
@@ -92,7 +92,7 @@ function playReferenceNote() {
   playNote("C4.mp3");
 }
 
-// Update the score
+// Update the displayed score
 function updateScore() {
   correctCountSpan.textContent = correctCount;
   incorrectCountSpan.textContent = incorrectCount;
