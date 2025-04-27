@@ -17,7 +17,7 @@ const incorrectCountSpan = document.getElementById('incorrectCount');
 const totalCountSpan = document.getElementById('totalCount');
 const percentageSpan = document.getElementById('percentage');
 
-// List of notes with their corresponding file names
+// List of notes with their corresponding file names (Added C5 note)
 const notes = [
   { name: 'C', file: 'C4.mp3' },
   { name: 'C#/Db', file: 'Csharp4.mp3' },
@@ -30,7 +30,8 @@ const notes = [
   { name: 'G#/Ab', file: 'Gsharp4.mp3' },
   { name: 'A', file: 'A4.mp3' },
   { name: 'A#/Bb', file: 'Asharp4.mp3' },
-  { name: 'B', file: 'B4.mp3' }
+  { name: 'B', file: 'B4.mp3' },
+  { name: 'C5', file: 'C5.mp3' }  // Added C5
 ];
 
 // Function to play a note
