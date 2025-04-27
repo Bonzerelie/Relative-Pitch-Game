@@ -1,62 +1,103 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background: #f0f8ff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+// Initialize
+let currentNote = null;
+let answered = false;
+let correctCount = 0;
+let incorrectCount = 0;
+
+const startBtn = document.getElementById('startBtn');
+const nextBtn = document.getElementById('nextBtn');
+const replayBtn = document.getElementById('replayBtn');
+const resetScoreBtn = document.getElementById('resetScoreBtn');
+const referenceBtn = document.getElementById('referenceBtn');
+const choicesDiv = document.getElementById('choices');
+const buttonsDiv = document.getElementById('buttons');
+const resultDiv = document.getElementById('result');
+const correctCountSpan = document.getElementById('correctCount');
+const incorrectCountSpan = document.getElementById('incorrectCount');
+const totalCountSpan = document.getElementById('totalCount');
+const percentageSpan = document.getElementById('percentage');
+
+// Start or move to next question
+function startGame() {
+  if (currentNote && !answered) {
+    alert("Please select an answer before moving on!");
+    return;
+  }
+
+  buttonsDiv.classList.remove('hidden');
+  resultDiv.textContent = "";
+  answered = false;
+
+  // Randomly select a note
+  currentNote = notes[Math.floor(Math.random() * notes.length)];
+  playNote(currentNote.file);
+
+  // Generate choice buttons with just the note letters (e.g., "C" instead of "C4")
+  choicesDiv.innerHTML = "";
+  notes.forEach(note => {
+    const btn = document.createElement('button');
+    // Display only the letter part of the note (e.g., "C" instead of "C4")
+    btn.textContent = note.name.replace(/[0-9]/g, '');  // Remove numbers
+    btn.addEventListener('click', () => makeGuess(note.name));
+    choicesDiv.appendChild(btn);
+  });
+
+  startBtn.textContent = "Next";
 }
 
-.game-container {
-  text-align: center;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  width: 400px;
+// Handle user's guess
+function makeGuess(selectedName) {
+  if (answered) return;
+
+  if (selectedName === currentNote.name) {
+    resultDiv.textContent = "✅ Correct!\n";
+    correctCount++;
+  } else {
+    resultDiv.textContent = `❌ Wrong! It was ${currentNote.name}\n`;
+    incorrectCount++;
+  }
+
+  answered = true;
+  updateScore();
 }
 
-button {
-  margin: 8px;
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 10px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
+// Replay the current note
+function replayNote() {
+  if (currentNote) {
+    playNote(currentNote.file);
+  }
 }
 
-button:hover {
-  background-color: #45a049;
+// Play reference note C4
+function playReferenceNote() {
+  playNote("C4.mp3");
 }
 
-.hidden {
-  display: none;
+// Update the displayed score
+function updateScore() {
+  correctCountSpan.textContent = correctCount;
+  incorrectCountSpan.textContent = incorrectCount;
+  const total = correctCount + incorrectCount;
+  totalCountSpan.textContent = total;
+  const percentage = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+  percentageSpan.textContent = `${percentage}%`;
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  white-space: pre-line; /* This makes \n behave like real line breaks! */
+// Reset the game
+function resetScore() {
+  correctCount = 0;
+  incorrectCount = 0;
+  currentNote = null;
+  answered = false;
+  updateScore();
+  resultDiv.textContent = "";
+  startBtn.textContent = "Start";
+  buttonsDiv.classList.add('hidden');
 }
 
-#score {
-  margin-top: 20px;
-  font-size: 18px;
-}
-
-#nextBtn {
-  display: none;
-}
-
-#buttons {
-  margin-top: 20px;
-}
-
-#reference {
-  margin-top: 20px;
-}
+// Event listeners
+startBtn.addEventListener('click', startGame);
+nextBtn.addEventListener('click', startGame);
+replayBtn.addEventListener('click', replayNote);
+referenceBtn.addEventListener('click', playReferenceNote);
+resetScoreBtn.addEventListener('click', resetScore);
