@@ -50,8 +50,8 @@ function startGame() {
 
   // Show answer buttons and 'Next' button
   startBtn.classList.add('hidden');
-  nextBtn.classList.remove('hidden');
-  buttonsDiv.classList.remove('hidden'); // Make sure the buttons appear after starting
+  nextBtn.classList.remove('hidden'); // Show 'Next' button after the game starts
+  buttonsDiv.classList.remove('hidden'); // Make sure the answer buttons appear
 
   // Reset result display
   resultDiv.textContent = "";
@@ -120,8 +120,8 @@ function resetScore() {
   resultDiv.textContent = "";
   startBtn.textContent = "Start";
   startBtn.classList.remove('hidden');
-  nextBtn.classList.add('hidden');
-  buttonsDiv.classList.add('hidden');
+  nextBtn.classList.add('hidden');  // Hide the Next button when resetting
+  buttonsDiv.classList.add('hidden'); // Hide the answer buttons when resetting
 }
 
 // Event listeners
