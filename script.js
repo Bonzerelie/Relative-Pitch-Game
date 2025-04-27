@@ -56,8 +56,8 @@ function startGame() {
   choicesDiv.innerHTML = "";
   notes.forEach(note => {
     const btn = document.createElement('button');
-    // Only display the note letter (without number)
-    btn.textContent = note.name.split(/[0-9]/)[0];  // This will remove the number
+    // Display only the letter part of the note (e.g., "C" instead of "C4")
+    btn.textContent = note.name.replace(/[0-9]/g, '');  // Remove numbers
     btn.addEventListener('click', () => makeGuess(note.name));
     choicesDiv.appendChild(btn);
   });
