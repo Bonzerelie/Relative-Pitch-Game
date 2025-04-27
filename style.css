@@ -27,6 +27,7 @@ button {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 button:hover {
@@ -49,18 +50,6 @@ button:hover {
   font-size: 18px;
 }
 
-#nextBtn {
-  display: none;
-}
-
-#buttons {
-  margin-top: 20px;
-}
-
-#reference {
-  margin-top: 20px;
-}
-
-#replayBtn, #nextBtn, #resetScoreBtn, #referenceBtn {
-  margin-top: 15px;
+#buttons button {
+  width: 80%; /* Make the buttons less wide to keep everything in a compact area */
 }
