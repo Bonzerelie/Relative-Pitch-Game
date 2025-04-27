@@ -120,3 +120,4 @@ startBtn.addEventListener('click', startGame);
 replayBtn.addEventListener('click', replayNote);
 referenceBtn.addEventListener('click', playReferenceNote);
 resetScoreBtn.addEventListener('click', resetScore);
+
