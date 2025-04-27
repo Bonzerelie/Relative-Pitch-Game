@@ -1,11 +1,25 @@
-// Initialize variables
+const notes = [
+  { name: "C4", file: "C4.mp3" },
+  { name: "C#/Db4", file: "Cs4.mp3" },
+  { name: "D4", file: "D4.mp3" },
+  { name: "D#/Eb4", file: "Ds4.mp3" },
+  { name: "E4", file: "E4.mp3" },
+  { name: "F4", file: "F4.mp3" },
+  { name: "F#/Gb4", file: "Fs4.mp3" },
+  { name: "G4", file: "G4.mp3" },
+  { name: "G#/Ab4", file: "Gs4.mp3" },
+  { name: "A4", file: "A4.mp3" },
+  { name: "A#/Bb4", file: "As4.mp3" },
+  { name: "B4", file: "B4.mp3" },
+  { name: "C5", file: "C5.mp3" }
+];
+
 let currentNote = null;
 let answered = false;
 let correctCount = 0;
 let incorrectCount = 0;
 
 const startBtn = document.getElementById('startBtn');
-const nextBtn = document.getElementById('nextBtn'); // New Next Button
 const replayBtn = document.getElementById('replayBtn');
 const resetScoreBtn = document.getElementById('resetScoreBtn');
 const referenceBtn = document.getElementById('referenceBtn');
@@ -17,42 +31,20 @@ const incorrectCountSpan = document.getElementById('incorrectCount');
 const totalCountSpan = document.getElementById('totalCount');
 const percentageSpan = document.getElementById('percentage');
 
-// List of notes with their corresponding file names
-const notes = [
-  { name: 'C', file: 'C4.mp3' },
-  { name: 'C#/Db', file: 'Csharp4.mp3' },
-  { name: 'D', file: 'D4.mp3' },
-  { name: 'D#/Eb', file: 'Dsharp4.mp3' },
-  { name: 'E', file: 'E4.mp3' },
-  { name: 'F', file: 'F4.mp3' },
-  { name: 'F#/Gb', file: 'Fsharp4.mp3' },
-  { name: 'G', file: 'G4.mp3' },
-  { name: 'G#/Ab', file: 'Gsharp4.mp3' },
-  { name: 'A', file: 'A4.mp3' },
-  { name: 'A#/Bb', file: 'Asharp4.mp3' },
-  { name: 'B', file: 'B4.mp3' }
-];
-
-// Function to play a note
-function playNote(file) {
-  const audio = new Audio('audio/' + file); // Assuming your audio folder is called 'audio'
+// Play a note from file
+function playNote(fileName) {
+  const audio = new Audio(`audio/${fileName}`);
   audio.play();
 }
 
 // Start or move to next question
 function startGame() {
-  // Prevent moving to next question before answering
   if (currentNote && !answered) {
     alert("Please select an answer before moving on!");
     return;
   }
 
-  // Show answer buttons and 'Next' button
-  startBtn.classList.add('hidden');
-  nextBtn.classList.remove('hidden');
-  buttonsDiv.classList.remove('hidden'); // Make sure the buttons appear after starting
-
-  // Reset result display
+  buttonsDiv.classList.remove('hidden');
   resultDiv.textContent = "";
   answered = false;
 
@@ -64,11 +56,13 @@ function startGame() {
   choicesDiv.innerHTML = "";
   notes.forEach(note => {
     const btn = document.createElement('button');
-    // Display only the letter part of the note (e.g., "C" instead of "C4")
-    btn.textContent = note.name.replace(/[0-9]/g, '');  // Remove numbers
+    // Only display the note letter (without number)
+    btn.textContent = note.name.split(/[0-9]/)[0];  // This will remove the number
     btn.addEventListener('click', () => makeGuess(note.name));
     choicesDiv.appendChild(btn);
   });
+
+  startBtn.textContent = "Next";
 }
 
 // Handle user's guess
@@ -118,14 +112,11 @@ function resetScore() {
   updateScore();
   resultDiv.textContent = "";
   startBtn.textContent = "Start";
-  startBtn.classList.remove('hidden');
-  nextBtn.classList.add('hidden');
   buttonsDiv.classList.add('hidden');
 }
 
 // Event listeners
 startBtn.addEventListener('click', startGame);
-nextBtn.addEventListener('click', startGame); // Ensure next works
 replayBtn.addEventListener('click', replayNote);
 referenceBtn.addEventListener('click', playReferenceNote);
 resetScoreBtn.addEventListener('click', resetScore);
