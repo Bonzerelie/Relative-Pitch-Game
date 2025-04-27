@@ -52,12 +52,11 @@ function startGame() {
   currentNote = notes[Math.floor(Math.random() * notes.length)];
   playNote(currentNote.file);
 
-  // Generate choice buttons with just the note letters (e.g., "C" instead of "C4")
+  // Generate choice buttons
   choicesDiv.innerHTML = "";
   notes.forEach(note => {
     const btn = document.createElement('button');
-    // Only display the note letter (without number)
-    btn.textContent = note.name.split(/[0-9]/)[0];  // This will remove the number
+    btn.textContent = note.name;
     btn.addEventListener('click', () => makeGuess(note.name));
     choicesDiv.appendChild(btn);
   });
